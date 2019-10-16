@@ -1,2 +1,0 @@
-# Neetogo
-Toy Project Neetogo
