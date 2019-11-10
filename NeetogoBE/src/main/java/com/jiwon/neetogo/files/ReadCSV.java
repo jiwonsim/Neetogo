@@ -34,6 +34,7 @@ public class ReadCSV implements CommandLineRunner {
                 }
                 List<String> tmpList = new ArrayList<String>();
                 String[] array = line.split(",");
+
                 tmpList = Arrays.asList(array);
                 System.out.println(tmpList);
                 ret.add(tmpList);

@@ -1,0 +1,9 @@
+DROP TABLE IF EXISTS station;
+
+CREATE TABLE station (
+	num BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
+    station_cd VARCHAR(50) NOT NULL,
+    station_nm VARCHAR(50) NOT NULL,
+    line_num VARCHAR(50) NOT NULL,
+	fr_code VARCHAR(50) NOT NULL
+);
