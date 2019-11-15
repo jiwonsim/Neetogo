@@ -27,4 +27,18 @@ public class StationService {
             return DefaultRes.res(StatusCode.DB_ERROR, ResponseMessage.DB_ERROR);
         }
     }
+
+    public DefaultRes getStationByName(String stationNm) {
+        try {
+            List<Station> station = stationRepo.findByStationNm(stationNm);
+            if (station == null) {
+                return DefaultRes.res(StatusCode.OK, ResponseMessage.NO_DATA);
+            }
+            return DefaultRes.res(StatusCode.OK, ResponseMessage.READ_DATA, station);
+        }
+        catch (Exception e) {
+            log.error(e.getMessage());
+            return DefaultRes.res(StatusCode.DB_ERROR, ResponseMessage.DB_ERROR);
+        }
+    }
 }
