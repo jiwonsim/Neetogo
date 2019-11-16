@@ -21,7 +21,7 @@ public class StationService {
     public DefaultRes saveStationInfo(Station station) {
         try {
             stationRepo.save(station);
-            return DefaultRes.res(StatusCode.OK, ResponseMessage.READ_DATA);
+            return DefaultRes.res(StatusCode.OK, ResponseMessage.SAVE_DATA);
         } catch (Exception e) {
             log.error(e.getMessage());
             return DefaultRes.res(StatusCode.DB_ERROR, ResponseMessage.DB_ERROR);
@@ -39,6 +39,17 @@ public class StationService {
         catch (Exception e) {
             log.error(e.getMessage());
             return DefaultRes.res(StatusCode.DB_ERROR, ResponseMessage.DB_ERROR);
+        }
+    }
+
+    public List<Station> getStationInfoByName(String stationNm) {
+        try {
+            List<Station> station = stationRepo.findByStationNm(stationNm);
+            return station;
+        }
+        catch (Exception e) {
+            log.error(e.getMessage());
+            return null;
         }
     }
 }
