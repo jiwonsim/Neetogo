@@ -1,6 +1,7 @@
 package com.jiwon.neetogo.controller;
 
 
+import com.jiwon.neetogo.service.OpenAPIService;
 import com.jiwon.neetogo.service.StationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +20,18 @@ public class StationController {
     @Autowired
     StationService stationService;
 
+    @Autowired
+    OpenAPIService openAPIService;
+
     @GetMapping("")
     public ResponseEntity getStationByName(@RequestParam(value = "name", required = false) String name) {
 //        log.info("station : " + stationNm);
         return new ResponseEntity(stationService.getStationByName(name), HttpStatus.OK);
+    }
+
+    @GetMapping("/test")
+    public void test() throws Exception {
+        log.info("in Test Controller");
+        openAPIService.httpGetRequest("0206");
     }
 }
