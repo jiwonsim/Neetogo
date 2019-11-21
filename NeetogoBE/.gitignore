@@ -31,5 +31,3 @@ build/
 .vscode/
 
 application.properties
-
-/secreteKeys/
