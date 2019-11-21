@@ -6,6 +6,7 @@ import com.google.gson.GsonBuilder;
 import com.jiwon.neetogo.dto.SearchLocationOfSTNByIDService;
 import com.jiwon.neetogo.dto.StationSearchByCode;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -17,16 +18,18 @@ import java.net.URI;
 @Service
 public class OpenAPIService {
 
+    @Value("${sodp.searchLocOfStaionNmById.key}")
+    private String sodpKey;
+
     public void httpGetRequest(String num) throws Exception {
         String baseURL = "openapi.seoul.go.kr";
-        String key = "";
 
         RestTemplate restTemplate = new RestTemplate();
         URI uri = UriComponentsBuilder.newInstance()
                 .scheme("http")
                 .host(baseURL)
                 .port(8088)
-                .path(key)
+                .path(sodpKey)
                 .path("/json/SearchLocationOfSTNByIDService/1/5/")
                 .path(num)
                 .build()
