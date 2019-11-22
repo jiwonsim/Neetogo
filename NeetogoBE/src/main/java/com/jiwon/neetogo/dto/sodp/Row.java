@@ -1,4 +1,4 @@
-package com.jiwon.neetogo.dto;
+package com.jiwon.neetogo.dto.sodp;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
@@ -26,16 +26,4 @@ public class Row {
     private String xpoint_wgs;
     @SerializedName("YPOINT_WGS")
     private String ypoint_wgs;
-
-
-//    private String station_cd;
-//    private String STATION_NM;
-//    private String LINE_NUM;
-//    private String FR_CODE;
-//    private String CYBER_ST_CODE;
-//    private String XPOINT;
-//    private String YPOINT;
-//    private String XPOINT_WGS;
-//    private String YPOINT_WGS;
-
 }

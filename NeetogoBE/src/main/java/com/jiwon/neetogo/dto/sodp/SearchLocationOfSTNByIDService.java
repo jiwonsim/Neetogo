@@ -1,16 +1,13 @@
-package com.jiwon.neetogo.dto;
+package com.jiwon.neetogo.dto.sodp;
 
-import com.fasterxml.jackson.annotation.JsonRootName;
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 
-import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
 @Data
 public class SearchLocationOfSTNByIDService {
-    @SerializedName("list_total_count")
-    private int listTotalCnt;
+    private int list_total_count;
     @SerializedName("RESULT")
     private Result result;
     private List<Row> row;

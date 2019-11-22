@@ -1,4 +1,4 @@
-package com.jiwon.neetogo.dto;
+package com.jiwon.neetogo.dto.sodp;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
