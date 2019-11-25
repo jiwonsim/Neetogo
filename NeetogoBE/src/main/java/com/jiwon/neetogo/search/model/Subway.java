@@ -1,5 +1,6 @@
 package com.jiwon.neetogo.search.model;
 
+
 import java.util.*;
 
 public class Subway extends ArrayList<Station> implements Cloneable {
@@ -45,3 +46,4 @@ public class Subway extends ArrayList<Station> implements Cloneable {
     }
 
 }
+

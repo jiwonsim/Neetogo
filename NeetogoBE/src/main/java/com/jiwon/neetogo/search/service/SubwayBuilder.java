@@ -1,7 +1,8 @@
-package com.jiwon.neetogo.search.controller;
+package com.jiwon.neetogo.search.service;
 
-import com.jiwon.neetogo.search.model.Subway;
-import com.jiwon.neetogo.search.model.Station;
+
+
+import com.jiwon.neetogo.search.model.*;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -45,7 +46,7 @@ public class SubwayBuilder {
         for (String data : datas) {
             String[] words = data.replace("\r", "").split("\t");
             if (words.length == 0) continue;
-            this.subway.addStation(words[1], words[0], words[3], -1);
+            this.subway.addStation(words[1], words[0], words[3], 2);
         }
     }
 
@@ -65,7 +66,7 @@ public class SubwayBuilder {
 
             if (station == null) continue;
             station.setMinute(Integer.parseInt(words[1]));
-            System.out.printf("%s %s\n", words[0], words[1]);
+//            System.out.printf("%s %s\n", words[0], words[1]);
         }
     }
 
@@ -81,7 +82,7 @@ public class SubwayBuilder {
         for (String data : datas) {
             String[] words = data.replace("\r", "").split(",");
             for (int i = 1; i < words.length; i++) {
-                setNextStation(words[0], words[1]);
+                setNextStation(words[0], words[i]);
             }
         }
     }
@@ -89,14 +90,13 @@ public class SubwayBuilder {
     public SubwayBuilder setNextStation(String curNm, String nextNm) {
         Station curStn = this.subway.getStationByNm(curNm);
         Station nextStn = this.subway.getStationByNm(nextNm);
-        System.out.printf("** %s %s\n", curNm, nextNm);
         setNextStation(curStn, nextStn);
         return this;
     }
 
     public SubwayBuilder setNextStation(Station curStn, Station nextStn) {
-        curStn.addNext(nextStn);
-        nextStn.addNext(curStn);
+        if (curStn != null) curStn.addNext(nextStn);
+        if (nextStn != null) nextStn.addNext(curStn);
         return this;
     }
 }

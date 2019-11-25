@@ -1,8 +1,9 @@
 package com.jiwon.neetogo.search.model;
 
+
 import java.util.ArrayList;
 
-public class Station {
+public class Station implements Comparable<Station> {
     String code;
     String name;
     String line;
@@ -51,6 +52,9 @@ public class Station {
 
     public void addNext(Station station) {
         if (this.next.contains(station)) return;
+        if (station == null) {
+            this.next.add(null);
+        }
         this.next.add(station);
     }
 
@@ -60,6 +64,11 @@ public class Station {
 
     public ArrayList<Station> getNext() {
         return this.next;
+    }
+
+    @Override
+    public int compareTo(Station station) {
+        return this.getMinute() - station.getMinute();
     }
 
 }

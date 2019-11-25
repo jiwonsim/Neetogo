@@ -1,4 +1,5 @@
-package com.jiwon.neetogo.search.manage;
+package com.jiwon.neetogo.search.resource;
+
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -7,12 +8,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class FileController {
-
-
+public class ResourceManager {
     public void createLinkFile(File stationFile) throws Exception {
         String path = System.getProperty("user.dir");
-        File file = new File(path + "/src/files/resources/linkNm.txt");
+        File file = new File(path + "src/main/java/com/jiwon/neetogo/search/resource/files/linkNm.txt");
         byte[] buffer = new byte[(int) stationFile.length()];
         try (FileInputStream in = new FileInputStream(stationFile)) {
             in.read(buffer, 0, buffer.length);
