@@ -12,10 +12,13 @@ public class SubwaySearcher {
         this.subway = subway;
     }
 
-    public void searchByNm(String startNm, String endNm) {
+    public ArrayList<Station> searchByNm(String startNm, String endNm) {
         Station startStn = this.subway.getStationByNm(startNm);
         Station endStn = this.subway.getStationByNm(endNm);
-        searchByStn(startStn, endStn);
+
+        System.out.println("1 " + startNm);
+        System.out.println("2 " + endNm);
+        return searchByStn(startStn, endStn);
     }
 
     public ArrayList<Station> getPath(Station start, Station end, HashMap<String, String> path) {
@@ -41,7 +44,7 @@ public class SubwaySearcher {
         return result;
     }
 
-    public void searchByStn(Station start, Station end) {
+    public ArrayList<Station> searchByStn(Station start, Station end) {
         HashMap<String, Integer> weight = new HashMap<>();
         HashMap<String, String> path = new HashMap<>();
 
@@ -58,7 +61,7 @@ public class SubwaySearcher {
         else resultSb.append("경로 없음\n");
 
         System.out.printf("%s", resultSb);
-        getPath(start, end, path);
+        return getPath(start, end, path);
     }
 
     private void dijkstra(Station start, Station end,
@@ -68,6 +71,9 @@ public class SubwaySearcher {
         PriorityQueue<Station> pq = new PriorityQueue<>();
         pq.add(start);
         visitedPath.add(start.getName());
+
+        System.out.println("start : " + start.getName());
+        System.out.println("end : " + end.getName());
 
 
         while (!pq.isEmpty()) {

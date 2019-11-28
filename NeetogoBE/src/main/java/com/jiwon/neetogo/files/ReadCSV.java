@@ -1,12 +1,10 @@
 package com.jiwon.neetogo.files;
 
-import com.jiwon.neetogo.entity.Station;
+import com.jiwon.neetogo.entity.StationEntity;
 import com.jiwon.neetogo.service.StationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import javax.swing.text.TabExpander;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -53,13 +51,13 @@ public class ReadCSV {
                 tmpList = Arrays.asList(array);
                 System.out.println(tmpList);
 
-                Station station = new Station();
-                station.setStationCd(tmpList.get(0));
-                station.setStationNm(tmpList.get(1));
-                station.setLineNum(tmpList.get(2));
-                station.setFrCode(tmpList.get(3));
+                StationEntity stationEntity = new StationEntity();
+                stationEntity.setStationCd(tmpList.get(0));
+                stationEntity.setStationNm(tmpList.get(1));
+                stationEntity.setLineNum(tmpList.get(2));
+                stationEntity.setFrCode(tmpList.get(3));
 
-                stationService.saveStationInfo(station);
+                stationService.saveStationInfo(stationEntity);
 
                 ret.add(tmpList);
             }

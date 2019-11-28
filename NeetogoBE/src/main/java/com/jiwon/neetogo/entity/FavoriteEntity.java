@@ -12,7 +12,7 @@ import java.sql.Timestamp;
 
 @Entity
 @Data
-public class Favorite {
+public class FavoriteEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long num;

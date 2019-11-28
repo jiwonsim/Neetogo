@@ -45,10 +45,11 @@ public class StationController {
         return new ResponseEntity(kakaoDevelopers.searchStationByHereLoc(locationDTO), HttpStatus.OK);
     }
 
-//    @GetMapping("/{startNm}/{endNm}")
-//    public ResponseEntity getLastTime(@PathVariable String startNm,
-//                                      @PathVariable String endNm) {
-//
-//    }
+    @GetMapping("/route")
+    public ResponseEntity getLastStationTime(@RequestParam(value = "start") String start,
+                                             @RequestParam(value = "end") String end) throws Exception {
+        return new ResponseEntity(stationService.getStationRoute(start, end), HttpStatus.OK);
+
+    }
 
 }
