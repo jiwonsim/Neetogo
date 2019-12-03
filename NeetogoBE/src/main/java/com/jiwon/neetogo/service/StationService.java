@@ -46,6 +46,13 @@ public class StationService {
         }
     }
 
+    public String getStationNm(String stationNm) {
+        List<StationEntity> result = stationRepo.findByStationNm(stationNm);
+        if (result == null) return null;
+        return result.get(0).getStationNm();
+    }
+
+
     public List<StationEntity> getStationInfoByName(String stationNm) {
         try {
             List<StationEntity> stationEntity = stationRepo.findByStationNm(stationNm);
@@ -58,12 +65,22 @@ public class StationService {
     }
 
     public DefaultRes getStationRoute(String start, String end) throws Exception{
-
-
-
+        // This service method only return >>String List<<
         InitializeComponent initializeComponent = new InitializeComponent(true);
-        ArrayList<Station> result = initializeComponent.searchRoute(start, end);
+
+        // Find full name of station
+        String fullStartNm = getStationNm(start);
+        String fullEndNm = getStationNm(end);
+
+        if (fullEndNm == null || fullStartNm == null) {
+            return DefaultRes.res(StatusCode.OK, ResponseMessage.FAIL_TO_READ_DATA); // Wrong input
+        }
+
+        log.info(fullStartNm);
+        log.info(fullEndNm);
+
+        List<String> result = initializeComponent.searchRoute(fullStartNm, fullEndNm);
         if (result == null) return DefaultRes.res(StatusCode.OK, ResponseMessage.NO_DATA);
-        else return DefaultRes.res(StatusCode.OK, ResponseMessage.READ_DATA, result);
+        return DefaultRes.res(StatusCode.OK, ResponseMessage.READ_DATA, result);
     }
 }

@@ -41,7 +41,7 @@ public class InitializeComponent {
     }
 
 
-    public ArrayList<Station> searchRoute(String start, String end) throws Exception {
+    public ArrayList<String> searchRoute(String start, String end) throws Exception {
         if (subway == null || searcher == null) {
             if (subway == null)
                 log.info("subway is null");

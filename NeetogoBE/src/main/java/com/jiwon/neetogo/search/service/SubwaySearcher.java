@@ -12,7 +12,7 @@ public class SubwaySearcher {
         this.subway = subway;
     }
 
-    public ArrayList<Station> searchByNm(String startNm, String endNm) {
+    public ArrayList<String> searchByNm(String startNm, String endNm) {
         Station startStn = this.subway.getStationByNm(startNm);
         Station endStn = this.subway.getStationByNm(endNm);
 
@@ -21,7 +21,7 @@ public class SubwaySearcher {
         return searchByStn(startStn, endStn);
     }
 
-    public ArrayList<Station> getPath(Station start, Station end, HashMap<String, String> path) {
+    public ArrayList<String> getPath(Station start, Station end, HashMap<String, String> path) {
 
         Stack<String> stack = new Stack<>();
 
@@ -34,17 +34,17 @@ public class SubwaySearcher {
             if (ele == start.getName()) break;
         }
 
-        ArrayList<Station> result = new ArrayList<>();
+        ArrayList<String> result = new ArrayList<>();
         while (!stack.isEmpty()) {
-            result.add(this.subway.getStationByNm(stack.pop()));
+            result.add(this.subway.getStationByNm(stack.pop()).getName());
         }
 
-        for (Station station : result) System.out.printf("%s => ", station.getName());
+//        for (Station station : result) System.out.printf("%s => ", station.getName());
 
         return result;
     }
 
-    public ArrayList<Station> searchByStn(Station start, Station end) {
+    public ArrayList<String> searchByStn(Station start, Station end) {
         HashMap<String, Integer> weight = new HashMap<>();
         HashMap<String, String> path = new HashMap<>();
 
@@ -60,7 +60,7 @@ public class SubwaySearcher {
         }
         else resultSb.append("경로 없음\n");
 
-        System.out.printf("%s", resultSb);
+        System.out.printf("%s\n", resultSb);
         return getPath(start, end, path);
     }
 
