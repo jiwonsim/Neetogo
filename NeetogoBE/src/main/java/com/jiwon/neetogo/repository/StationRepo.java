@@ -13,5 +13,4 @@ public interface StationRepo extends CrudRepository<StationEntity, Long> {
     )
     List<StationEntity> findByStationNm(String stationNm);
 
-
 }

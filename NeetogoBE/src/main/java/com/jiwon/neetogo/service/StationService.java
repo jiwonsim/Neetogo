@@ -1,5 +1,6 @@
 package com.jiwon.neetogo.service;
 
+import com.jiwon.neetogo.dto.StationDTO;
 import com.jiwon.neetogo.entity.StationEntity;
 import com.jiwon.neetogo.init.InitializeComponent;
 import com.jiwon.neetogo.repository.StationRepo;
@@ -76,10 +77,24 @@ public class StationService {
             return DefaultRes.res(StatusCode.OK, ResponseMessage.FAIL_TO_READ_DATA); // Wrong input
         }
 
-        log.info(fullStartNm);
-        log.info(fullEndNm);
+        List<String> nmList = initializeComponent.searchRoute(fullStartNm, fullEndNm);
 
-        List<String> result = initializeComponent.searchRoute(fullStartNm, fullEndNm);
+        List<StationDTO> result = new ArrayList<>();
+        for (int i = 0; i < nmList.size(); i++) {
+            String name = nmList.get(i);
+
+            List<StationEntity> stations = stationRepo.findByStationNm(name);
+            StationEntity station = stations.get(0);
+
+            StationDTO ele = new StationDTO();
+            ele.setStationNm(station.getStationNm());
+            ele.setLineNum(station.getLineNum());
+            ele.setStationCd(station.getStationCd());
+            ele.setFrCode(station.getFrCode());
+
+            result.add(ele);
+        }
+
         if (result == null) return DefaultRes.res(StatusCode.OK, ResponseMessage.NO_DATA);
         return DefaultRes.res(StatusCode.OK, ResponseMessage.READ_DATA, result);
     }
