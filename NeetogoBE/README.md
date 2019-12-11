@@ -91,13 +91,38 @@
 
 **Response**
 <pre><code>{
+{
     "status": 200,
     "message": "데이터 조회 성공",
     "data": [
-        "독산",
-        "가산디지털단지",
-        "구로",
-        "신도림"
+        {
+            "num": null,
+            "stationCd": "1714",
+            "stationNm": "독산",
+            "lineNum": "01호선",
+            "frCode": "P143"
+        },
+        {
+            "num": null,
+            "stationCd": "1702",
+            "stationNm": "가산디지털단지",
+            "lineNum": "01호선",
+            "frCode": "P142"
+        },
+        {
+            "num": null,
+            "stationCd": "1701",
+            "stationNm": "구로",
+            "lineNum": "01호선",
+            "frCode": "141"
+        },
+        {
+            "num": null,
+            "stationCd": "0234",
+            "stationNm": "신도림",
+            "lineNum": "02호선",
+            "frCode": "234"
+        }
     ]
 }
 </code></pre>
