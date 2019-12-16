@@ -1,5 +1,6 @@
 package com.jiwon.neetogo.service;
 
+import com.jiwon.neetogo.dto.RouteStaitonDTO;
 import com.jiwon.neetogo.dto.StationDTO;
 import com.jiwon.neetogo.entity.StationEntity;
 import com.jiwon.neetogo.init.InitializeComponent;
@@ -79,14 +80,15 @@ public class StationService {
 
         List<String> nmList = initializeComponent.searchRoute(fullStartNm, fullEndNm);
 
-        List<StationDTO> result = new ArrayList<>();
+        List<RouteStaitonDTO> result = new ArrayList<>();
         for (int i = 0; i < nmList.size(); i++) {
             String name = nmList.get(i);
 
             List<StationEntity> stations = stationRepo.findByStationNm(name);
             StationEntity station = stations.get(0);
 
-            StationDTO ele = new StationDTO();
+            RouteStaitonDTO ele = new RouteStaitonDTO();
+            ele.setOrder(i + 1);
             ele.setStationNm(station.getStationNm());
             ele.setLineNum(station.getLineNum());
             ele.setStationCd(station.getStationCd());
