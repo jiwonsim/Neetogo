@@ -91,35 +91,34 @@
 
 **Response**
 <pre><code>{
-{
     "status": 200,
     "message": "데이터 조회 성공",
     "data": [
         {
-            "num": null,
-            "stationCd": "1714",
+            "order": 1,
             "stationNm": "독산",
+            "stationCd": "1714",
             "lineNum": "01호선",
             "frCode": "P143"
         },
         {
-            "num": null,
-            "stationCd": "1702",
+            "order": 2,
             "stationNm": "가산디지털단지",
+            "stationCd": "1702",
             "lineNum": "01호선",
             "frCode": "P142"
         },
         {
-            "num": null,
-            "stationCd": "1701",
+            "order": 3,
             "stationNm": "구로",
+            "stationCd": "1701",
             "lineNum": "01호선",
             "frCode": "141"
         },
         {
-            "num": null,
-            "stationCd": "0234",
+            "order": 4,
             "stationNm": "신도림",
+            "stationCd": "0234",
             "lineNum": "02호선",
             "frCode": "234"
         }
