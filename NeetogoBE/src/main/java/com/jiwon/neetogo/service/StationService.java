@@ -3,12 +3,14 @@ package com.jiwon.neetogo.service;
 import com.jiwon.neetogo.dto.RouteDTO;
 import com.jiwon.neetogo.dto.RouteOfStationDTO;
 import com.jiwon.neetogo.dto.StationDTO;
+import com.jiwon.neetogo.dto.sodp.LastTrainTime;
 import com.jiwon.neetogo.entity.StationEntity;
 import com.jiwon.neetogo.init.InitializeComponent;
 import com.jiwon.neetogo.repository.StationRepo;
 import com.jiwon.neetogo.search.model.ResultOfRoute;
 import com.jiwon.neetogo.search.model.Station;
 import com.jiwon.neetogo.search.service.SubwaySearcher;
+import com.jiwon.neetogo.service.outer.SeoulOpenData;
 import com.jiwon.neetogo.util.DefaultRes;
 import com.jiwon.neetogo.util.ResponseMessage;
 import com.jiwon.neetogo.util.StatusCode;
@@ -20,6 +22,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 @Slf4j
@@ -28,6 +31,9 @@ public class StationService {
 
     @Autowired
     StationRepo stationRepo;
+
+    @Autowired
+    SeoulOpenData seoulOpenData;
 
     public DefaultRes saveStationInfo(StationEntity stationEntity) {
         try {
@@ -139,5 +145,28 @@ public class StationService {
         result.setStationCnt(String.valueOf(searchingStationResult.size()));
 
         return DefaultRes.res(StatusCode.OK, ResponseMessage.READ_DATA, result);
+    }
+
+    public DefaultRes getLastTimes(String stationNm, String direction) {
+        Calendar cal = Calendar.getInstance();
+        int dayOfToday = cal.get(Calendar.DAY_OF_WEEK);
+
+        String day;
+        if (dayOfToday == 1) day = "3"; // 일요일
+        else if (dayOfToday == 7) day = "2"; // 토요일
+        else day = "1";
+
+        List<StationEntity> station = stationRepo.findByStationNm(stationNm);
+        if (station == null) return DefaultRes.res(StatusCode.OK, ResponseMessage.FAIL_TO_READ_DATA);
+
+        String stationCd = station.get(0).getStationCd();
+
+        LastTrainTime result = seoulOpenData.searchLastTrainTimeByID(stationCd, day, direction);
+        if (!result.getInfo().getResult().getCode().equals("INFO-000")) {
+            return DefaultRes.res(StatusCode.SERVICE_UNAVAILABLE, ResponseMessage.FAIL_TO_READ_DATA);
+        }
+
+        return DefaultRes.res(StatusCode.OK, ResponseMessage.READ_DATA, result.getInfo().getRow());
+
     }
 }

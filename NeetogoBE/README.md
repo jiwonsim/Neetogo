@@ -5,7 +5,7 @@
  
  
 
-개발기반 : 2019.11.07 ~
+개발기반 : 2019.11 ~ 2019.12
 
 ## API 명세
 | URL | 메서드 | 설명 |
@@ -35,6 +35,7 @@
 </code></pre>
 
 <br>
+
 ---
 <br>
 
@@ -73,6 +74,7 @@
 </code></pre>
 
 <br>
+
 ---
 <br>
 
@@ -135,9 +137,46 @@
 </code></pre>
 
 <br>
+
 ---
 <br>
 
+
+| URL | 메서드 | 설명 |
+|:---|:---:|:---|
+|/search/lastTimes|GET|막차 종류 출력|
+
+
+**Request**
+
+| 키 | 설명 | 필수 | 타입 | 
+|:---|:---:|:---:|:---:|
+|stn|역이름|O|String|
+|dir|상행선/하행선|O|String|
+
+**Response**
+<pre><code>{
+    "status": 200,
+    "message": "데이터 조회 성공",
+    "data": [
+        {
+            "frCode": "P143",
+            "stationCd": "1714",
+            "stationNm": "독산",
+            "subwayEname": "구로",
+            "leftTime": "24:23:00",
+            "weekTag": "1",
+            "inoutTag": "1"
+        },
+        ...
+    ]
+}
+</code></pre>
+
+<br>
+
+---
+<br>
 
 | URL | 메서드 | 설명 |
 |:---|:---:|:---|
@@ -154,6 +193,7 @@
 </code></pre>
 
 <br>
+
 ---
 <br>
 
@@ -178,20 +218,13 @@
             "latitude": null,
             "longitude": null,
             "createdAt": "2019-11-28T11:51:58.000+0000"
-        },
-        {
-            "num": 733,
-            "name": null,
-            "code": null,
-            "latitude": null,
-            "longitude": null,
-            "createdAt": "2019-11-28T11:52:09.000+0000"
         }
     ]
 }
 </code></pre>
 
 <br>
+
 ---
 <br>
 
@@ -221,8 +254,6 @@
 </code></pre>
 
 
- 
-## Server Architecture
 
 ## Dependencies
 

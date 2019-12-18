@@ -6,9 +6,10 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class SearchLocationOfSTNByIDService {
-    private int list_total_count;
+public class SearchLastTrainTimeByIDService {
+    @SerializedName("list_total_count")
+    private int listTotalCnt;
     @SerializedName("RESULT")
     private Result result;
-    private List<LocOfRow> row;
+    private List<LastTimeOfRow> row;
 }

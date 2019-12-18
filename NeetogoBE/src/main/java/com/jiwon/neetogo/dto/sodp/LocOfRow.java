@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @Data
 @XmlRootElement(name = "row")
-public class Row {
+public class LocOfRow {
     @SerializedName("STATION_CD")
     private String station_cd;
     @SerializedName("STATION_NM")

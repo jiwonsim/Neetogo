@@ -46,10 +46,16 @@ public class StationController {
     }
 
     @GetMapping("/route")
-    public ResponseEntity getLastStationTime(@RequestParam(value = "start") String start,
+    public ResponseEntity getStationRoute(@RequestParam(value = "start") String start,
                                              @RequestParam(value = "end") String end) throws Exception {
         return new ResponseEntity(stationService.getStationRoute(start, end), HttpStatus.OK);
+    }
 
+    @GetMapping("/lastTimes")
+    public ResponseEntity getLastStationTime(@RequestParam(value = "stn") String stationNm,
+                                   @RequestParam(value = "dir") String direction) {
+        // 37.466613 126.889249
+        return new ResponseEntity(stationService.getLastTimes(stationNm, direction), HttpStatus.OK);
     }
 
 }
