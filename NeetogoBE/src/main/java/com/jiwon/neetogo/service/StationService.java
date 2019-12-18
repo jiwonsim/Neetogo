@@ -2,7 +2,10 @@ package com.jiwon.neetogo.service;
 
 import com.jiwon.neetogo.dto.RouteDTO;
 import com.jiwon.neetogo.dto.RouteOfStationDTO;
+import com.jiwon.neetogo.dto.StartTimeDTO;
 import com.jiwon.neetogo.dto.StationDTO;
+import com.jiwon.neetogo.dto.kakao.geo.Documents;
+import com.jiwon.neetogo.dto.kakao.geo.GEOResult;
 import com.jiwon.neetogo.dto.sodp.LastTrainTime;
 import com.jiwon.neetogo.entity.StationEntity;
 import com.jiwon.neetogo.init.InitializeComponent;
@@ -10,6 +13,7 @@ import com.jiwon.neetogo.repository.StationRepo;
 import com.jiwon.neetogo.search.model.ResultOfRoute;
 import com.jiwon.neetogo.search.model.Station;
 import com.jiwon.neetogo.search.service.SubwaySearcher;
+import com.jiwon.neetogo.service.outer.KakaoDevelopers;
 import com.jiwon.neetogo.service.outer.SeoulOpenData;
 import com.jiwon.neetogo.util.DefaultRes;
 import com.jiwon.neetogo.util.ResponseMessage;
@@ -34,6 +38,9 @@ public class StationService {
 
     @Autowired
     SeoulOpenData seoulOpenData;
+
+    @Autowired
+    KakaoDevelopers kakaoDevelopers;
 
     public DefaultRes saveStationInfo(StationEntity stationEntity) {
         try {
@@ -167,6 +174,56 @@ public class StationService {
         }
 
         return DefaultRes.res(StatusCode.OK, ResponseMessage.READ_DATA, result.getInfo().getRow());
+    }
 
+    private double transString2Double(String number) {
+        return Double.parseDouble(number);
+    }
+
+    public double calcDistance(Documents startCoord, Documents endCoord) {
+        double startX = transString2Double(startCoord.getX());
+        double startY = transString2Double(startCoord.getY());
+
+        double endX = transString2Double(endCoord.getX());
+        double endY = transString2Double(endCoord.getY());
+
+        double result = Math.sqrt(Math.pow(startX - endX, 2) - Math.pow(startY - endY, 2));
+        System.out.println(result);
+        System.out.println((int)result);
+        return result;
+    }
+
+    public int calcWalkingMinute(double distance) {
+        // 1km = 1000m = 10분 -> 1m = 10/1000분 = 1/100분 = 대충 1초
+        System.out.println("distance_double : " + distance);
+        System.out.println("distance_int : " + Math.round(distance));
+        int second = (int) distance;
+        if (second <= 60) return 1;
+        int minute = second / 60;
+
+        return minute + 1;
+    }
+
+    public DefaultRes getDistanceByWGS(String startLongitude, String startLatitude, String endLongitude, String endLatitude, String time) {
+        Documents startTransRes = kakaoDevelopers.transformCoordinate(startLongitude, startLatitude);
+        Documents endTransRes = kakaoDevelopers.transformCoordinate(endLongitude, endLatitude);
+        if (startTransRes == null || endTransRes == null)
+            return DefaultRes.res(StatusCode.OK, ResponseMessage.NO_DATA); // 에러
+
+        double distanceWTM = calcDistance(startTransRes, endTransRes); // 1WTM = 1m
+        int minute = calcWalkingMinute(distanceWTM);
+
+        StartTimeDTO startTimeDTO = new StartTimeDTO();
+        String[] arrivalTime = time.split(":");
+        int startHour = Integer.parseInt(arrivalTime[0]), startMin = Integer.parseInt(arrivalTime[1]);
+        if (minute > 60) {
+            startHour -= (minute / 60);
+        }
+        startMin -= (minute % 60);
+
+        startTimeDTO.setSpendingMinute(minute);
+        startTimeDTO.setStartingTime(startHour + ":" + startMin);
+
+        return DefaultRes.res(StatusCode.OK, ResponseMessage.READ_DATA, startTimeDTO);
     }
 }

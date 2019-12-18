@@ -180,16 +180,27 @@
 
 | URL | 메서드 | 설명 |
 |:---|:---:|:---|
-|/search/last|GET|막차 시간에 따른 출발 시간 출력|
+|/search/startingTime|GET|막차 시간에 따른 출발 시간 출력|
 
 
 **Request**
 
 | 키 | 설명 | 필수 | 타입 | 
 |:---|:---:|:---:|:---:|
+|startX|출발 Longitude|O|String|
+|startY|출발 Latitude|O|String|
+|endX|도착 Longitude|O|String|
+|endY|도착 Latitude|O|String|
 
 **Response**
-<pre><code>
+<pre><code>{
+    "status": 200,
+    "message": "데이터 조회 성공",
+    "data": {
+       "spendingTime": 10,
+       "startingTime": "24:13"
+    }
+}
 </code></pre>
 
 <br>
@@ -263,7 +274,7 @@
 
 In NGrinder 
 
-**2019/12/04 기준** 
+**2019/12 기준** 
 
 * RestTemplate(Block I/O & Synchronous API)
 * MySQL

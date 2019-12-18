@@ -37,11 +37,11 @@ public class StationController {
     }
 
     @GetMapping("/here")
-    public ResponseEntity getStationByHereLoc(@RequestParam(value = "x") String x,
-                                    @RequestParam(value = "y") String y) {
+    public ResponseEntity getStationByHereLoc(@RequestParam(value = "x") String longitude,
+                                    @RequestParam(value = "y") String latitude) {
         LocationDTO locationDTO = new LocationDTO();
-        locationDTO.setLatitude(x);
-        locationDTO.setLongitude(y);
+        locationDTO.setLatitude(latitude);
+        locationDTO.setLongitude(longitude);
         return new ResponseEntity(kakaoDevelopers.searchStationByHereLoc(locationDTO), HttpStatus.OK);
     }
 
@@ -56,6 +56,16 @@ public class StationController {
                                    @RequestParam(value = "dir") String direction) {
         // 37.466613 126.889249
         return new ResponseEntity(stationService.getLastTimes(stationNm, direction), HttpStatus.OK);
+    }
+
+    @GetMapping("/startingTime")
+    public ResponseEntity getStartingTime(@RequestParam(value = "startX") String startLongitude,
+                                          @RequestParam(value = "startY") String startLatitude,
+                                          @RequestParam(value = "endX") String endLongitude,
+                                          @RequestParam(value = "endY") String endLatitude,
+                                          @RequestParam(value = "time") String time) {
+        return new ResponseEntity(stationService.getDistanceByWGS(startLongitude, startLatitude, endLongitude, endLatitude, time), HttpStatus.OK);
+
     }
 
 }

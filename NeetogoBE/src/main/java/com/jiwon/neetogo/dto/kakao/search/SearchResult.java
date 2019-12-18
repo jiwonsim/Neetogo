@@ -1,11 +1,11 @@
-package com.jiwon.neetogo.dto.kakao;
+package com.jiwon.neetogo.dto.kakao.search;
 
 import lombok.Data;
 
 import java.util.List;
 
 @Data
-public class Result {
+public class SearchResult {
     private Meta meta;
     private List<Documents> documents;
 }

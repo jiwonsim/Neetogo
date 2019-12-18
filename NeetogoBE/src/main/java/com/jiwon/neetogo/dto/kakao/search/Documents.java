@@ -1,4 +1,4 @@
-package com.jiwon.neetogo.dto.kakao;
+package com.jiwon.neetogo.dto.kakao.search;
 
 import lombok.Data;
 
