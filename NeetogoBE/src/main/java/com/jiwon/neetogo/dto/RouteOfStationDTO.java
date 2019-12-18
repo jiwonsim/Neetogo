@@ -3,10 +3,11 @@ package com.jiwon.neetogo.dto;
 import lombok.Data;
 
 @Data
-public class RouteStaitonDTO {
+public class RouteOfStationDTO {
     private int order;
-    private String stationNm;
     private String stationCd;
+    private String stationNm;
     private String lineNum;
     private String frCode;
+    private String direction;
 }

@@ -12,7 +12,7 @@ public class SubwaySearcher {
         this.subway = subway;
     }
 
-    public ArrayList<String> searchByNm(String startNm, String endNm) {
+    public ResultOfRoute searchByNm(String startNm, String endNm) {
         Station startStn = this.subway.getStationByNm(startNm);
         Station endStn = this.subway.getStationByNm(endNm);
 
@@ -44,7 +44,7 @@ public class SubwaySearcher {
         return result;
     }
 
-    public ArrayList<String> searchByStn(Station start, Station end) {
+    public ResultOfRoute searchByStn(Station start, Station end) {
         HashMap<String, Integer> weight = new HashMap<>();
         HashMap<String, String> path = new HashMap<>();
 
@@ -52,16 +52,23 @@ public class SubwaySearcher {
 
         dijkstra(start, end, weight, path);
 
-        StringBuffer resultSb = new StringBuffer();
+//        StringBuffer resultSb = new StringBuffer();
+//
+//        resultSb.append("\n" + start.getName() + "부터 " + end.getName() + "까지\n");
+//        if (weight.get(end.getName()) != Integer.MAX_VALUE) {
+//            resultSb.append(weight.get(end.getName()) + "분 걸림\n");
+//        }
+//        else resultSb.append("경로 없음\n");
 
-        resultSb.append("\n" + start.getName() + "부터 " + end.getName() + "까지\n");
+//        System.out.printf("%s\n", resultSb);
+
+        ArrayList<String> resPath = getPath(start, end, path);
+        int spendingTime = -1;
         if (weight.get(end.getName()) != Integer.MAX_VALUE) {
-            resultSb.append(weight.get(end.getName()) + "분 걸림\n");
+            spendingTime = weight.get(end.getName());
         }
-        else resultSb.append("경로 없음\n");
 
-        System.out.printf("%s\n", resultSb);
-        return getPath(start, end, path);
+        return new ResultOfRoute(spendingTime, resPath);
     }
 
     private void dijkstra(Station start, Station end,

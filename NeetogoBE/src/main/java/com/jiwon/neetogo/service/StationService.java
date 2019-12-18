@@ -1,10 +1,12 @@
 package com.jiwon.neetogo.service;
 
-import com.jiwon.neetogo.dto.RouteStaitonDTO;
+import com.jiwon.neetogo.dto.RouteDTO;
+import com.jiwon.neetogo.dto.RouteOfStationDTO;
 import com.jiwon.neetogo.dto.StationDTO;
 import com.jiwon.neetogo.entity.StationEntity;
 import com.jiwon.neetogo.init.InitializeComponent;
 import com.jiwon.neetogo.repository.StationRepo;
+import com.jiwon.neetogo.search.model.ResultOfRoute;
 import com.jiwon.neetogo.search.model.Station;
 import com.jiwon.neetogo.search.service.SubwaySearcher;
 import com.jiwon.neetogo.util.DefaultRes;
@@ -14,6 +16,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,26 +83,61 @@ public class StationService {
             return DefaultRes.res(StatusCode.OK, ResponseMessage.FAIL_TO_READ_DATA); // Wrong input
         }
 
-        List<String> nmList = initializeComponent.searchRoute(fullStartNm, fullEndNm);
+        ResultOfRoute resultOfRoute = initializeComponent.searchRoute(fullStartNm, fullEndNm);
+        ArrayList<String> nmList = resultOfRoute.getStationNms();
 
-        List<RouteStaitonDTO> result = new ArrayList<>();
+        List<RouteOfStationDTO> searchingStationResult = new ArrayList<>();
         for (int i = 0; i < nmList.size(); i++) {
             String name = nmList.get(i);
 
             List<StationEntity> stations = stationRepo.findByStationNm(name);
             StationEntity station = stations.get(0);
 
-            RouteStaitonDTO ele = new RouteStaitonDTO();
+            RouteOfStationDTO ele = new RouteOfStationDTO();
             ele.setOrder(i + 1);
             ele.setStationNm(station.getStationNm());
             ele.setLineNum(station.getLineNum());
             ele.setStationCd(station.getStationCd());
             ele.setFrCode(station.getFrCode());
 
-            result.add(ele);
+            searchingStationResult.add(ele);
         }
 
-        if (result == null) return DefaultRes.res(StatusCode.OK, ResponseMessage.NO_DATA);
+        // 상행선 하행선을 찾기 위해 linkNm.txt 탐색
+        String path = "/Users/simjiwon/Desktop/Project/Neetogo/NeetogoBE/src/main/java/com/jiwon/neetogo/search/resource/files";
+        File file = new File(path + "/linkNm.txt");
+
+        byte[] fileBytes = new byte[(int) file.length()];
+        try (FileInputStream in = new FileInputStream(file)) {
+            in.read(fileBytes, 0, fileBytes.length);
+        }
+
+        String[] datas = new String(fileBytes).split("\n");
+        if (datas.length <= 0) new IOException("WRONG_DOCUMENTS_STYLE");
+
+        for (int i = 1; i < searchingStationResult.size(); i++) {
+            RouteOfStationDTO curStn = searchingStationResult.get(i - 1);
+            RouteOfStationDTO nextStn = searchingStationResult.get(i);
+            for (String data : datas) {
+                String[] words = data.replace("\r", "").split(",");
+                if (words[0].equals(curStn.getStationNm())) {
+                    if (words[1].equals(nextStn.getStationNm())) { // 상행
+                        searchingStationResult.get(i - 1).setDirection("1");
+                    }
+                    if (words[2].equals(nextStn.getStationNm())) { // 하행
+                        searchingStationResult.get(i - 1).setDirection("2");
+                    }
+                }
+            }
+        }
+
+        if (searchingStationResult == null) return DefaultRes.res(StatusCode.OK, ResponseMessage.NO_DATA);
+
+        RouteDTO result = new RouteDTO();
+        result.setSpendingTime(String.valueOf(resultOfRoute.getSpendingTime()));
+        result.setRouteOfStation(searchingStationResult);
+        result.setStationCnt(String.valueOf(searchingStationResult.size()));
+
         return DefaultRes.res(StatusCode.OK, ResponseMessage.READ_DATA, result);
     }
 }

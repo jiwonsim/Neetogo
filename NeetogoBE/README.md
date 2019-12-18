@@ -93,36 +93,44 @@
 <pre><code>{
     "status": 200,
     "message": "데이터 조회 성공",
-    "data": [
-        {
-            "order": 1,
-            "stationNm": "독산",
-            "stationCd": "1714",
-            "lineNum": "01호선",
-            "frCode": "P143"
-        },
-        {
-            "order": 2,
-            "stationNm": "가산디지털단지",
-            "stationCd": "1702",
-            "lineNum": "01호선",
-            "frCode": "P142"
-        },
-        {
-            "order": 3,
-            "stationNm": "구로",
-            "stationCd": "1701",
-            "lineNum": "01호선",
-            "frCode": "141"
-        },
-        {
-            "order": 4,
-            "stationNm": "신도림",
-            "stationCd": "0234",
-            "lineNum": "02호선",
-            "frCode": "234"
-        }
-    ]
+    "data": {
+        "spendingTime": "6",
+        "stationCnt": "4",
+        "routeOfStation": [
+            {
+                "order": 1,
+                "stationCd": "1714",
+                "stationNm": "독산",
+                "lineNum": "01호선",
+                "frCode": "P143",
+                "direction": "1"
+            },
+            {
+                "order": 2,
+                "stationCd": "1702",
+                "stationNm": "가산디지털단지",
+                "lineNum": "01호선",
+                "frCode": "P142",
+                "direction": "1"
+            },
+            {
+                "order": 3,
+                "stationCd": "1701",
+                "stationNm": "구로",
+                "lineNum": "01호선",
+                "frCode": "141",
+                "direction": "1"
+            },
+            {
+                "order": 4,
+                "stationCd": "0234",
+                "stationNm": "신도림",
+                "lineNum": "02호선",
+                "frCode": "234",
+                "direction": null
+            }
+        ]
+    }
 }
 </code></pre>
 

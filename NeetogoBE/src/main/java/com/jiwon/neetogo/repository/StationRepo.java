@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface StationRepo extends CrudRepository<StationEntity, Long> {
     @Query(
-            value = "SELECT * FROM station s WHERE s.station_nm LIKE %?1%",
+            value = "SELECT * FROM station s WHERE s.station_nm LIKE %?1% ORDER BY LENGTH(s.station_nm)",
             nativeQuery = true
     )
     List<StationEntity> findByStationNm(String stationNm);

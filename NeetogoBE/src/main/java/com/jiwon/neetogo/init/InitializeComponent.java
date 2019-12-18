@@ -1,5 +1,6 @@
 package com.jiwon.neetogo.init;
 
+import com.jiwon.neetogo.search.model.ResultOfRoute;
 import com.jiwon.neetogo.search.model.Station;
 import com.jiwon.neetogo.search.model.Subway;
 import com.jiwon.neetogo.search.service.SubwayBuilder;
@@ -41,7 +42,7 @@ public class InitializeComponent {
     }
 
 
-    public ArrayList<String> searchRoute(String start, String end) throws Exception {
+    public ResultOfRoute searchRoute(String start, String end) throws Exception {
         if (subway == null || searcher == null) {
             if (subway == null)
                 log.info("subway is null");
@@ -50,8 +51,6 @@ public class InitializeComponent {
             }
         }
         else {
-            log.info("지하철 : " + subway);
-            log.info("서처 : " + searcher);
             return searcher.searchByNm(start, end);
         }
         return null;
