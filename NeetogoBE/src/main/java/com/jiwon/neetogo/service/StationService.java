@@ -195,8 +195,6 @@ public class StationService {
 
     public int calcWalkingMinute(double distance) {
         // 1km = 1000m = 10분 -> 1m = 10/1000분 = 1/100분 = 대충 1초
-        System.out.println("distance_double : " + distance);
-        System.out.println("distance_int : " + Math.round(distance));
         int second = (int) distance;
         if (second <= 60) return 1;
         int minute = second / 60;

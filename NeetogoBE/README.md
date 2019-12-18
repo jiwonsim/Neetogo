@@ -268,19 +268,77 @@
 
 ## Dependencies
 
+코드 환경은 **Intellij IDEA + MAC OS + JAVA 8** 입니다.
+MAVEN 의존성 프로젝트는 아래와 같습니다.  
+
+```
+<dependencies>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-test</artifactId>
+        <scope>test</scope>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-jdbc</artifactId>
+        <version>2.1.6.RELEASE</version>
+    </dependency>
+    <dependency>
+        <groupId>mysql</groupId>
+        <artifactId>mysql-connector-java</artifactId>
+        <version>8.0.16</version>
+    </dependency>
+    <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>1.7.25</version>
+    </dependency>
+    <dependency>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+        <version>1.18.8</version>
+        <scope>provided</scope>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-data-jpa</artifactId>
+        <version>2.1.4.RELEASE</version>
+    </dependency>
+    <dependency>
+        <groupId>com.google.code.gson</groupId>
+        <artifactId>gson</artifactId>
+        <version>2.8.5</version>
+    </dependency>
+
+</dependencies>
+    
+```
+
 ## Start Server
 
-## Test 
+- 8101 port 로 연결
 
-In NGrinder 
+- `JDK8`과 `Maven` 설치가 필요
+ 
+- `JAVA_HOME`환경변수 설정이 필요
+ 
+- `Path`에 `Maven` 환경변수를 설정
 
-**2019/12 기준** 
+- 내장 톰캣을 이용해 서버를 배포
 
-* RestTemplate(Block I/O & Synchronous API)
-* MySQL
-* File System 
+- `application.properties`파일이 필요
 
+- Spring boot 앱 실행 
+```
+mvn spring-boot:run
+```
 
+- 종료 시, `command + c` 
 
 ### Used Tools
 1. Spring Boot - Spring Boot Web Framework
