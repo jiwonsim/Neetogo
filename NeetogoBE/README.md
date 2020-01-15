@@ -1,13 +1,47 @@
 # Neetogo.BE
 
-현 위치에서 가장 가까운 전철역에 따른 막차 시간을 알려줍니다. 
+### Description
+
+* 현 위치에서 가장 가까운 전철역에 따른 막차 시간을 알려주는 미리 API 서버입니다.  
+
 
  
+### Used Tools
+1. Spring Boot - Spring Boot Web Framework
+2. Java 8
+2. Maven
+3. Tomcat
+4. Intellij IDEA - IDE
+5. MySQL - Database
+6. JPA
+
+ 
+### Start Server
+
+- 8101 port 로 연결
+
+- `JDK8`과 `Maven` 설치가 필요
+ 
+- `JAVA_HOME`환경변수 설정이 필요
+ 
+- `Path`에 `Maven` 환경변수를 설정
+
+- 내장 톰캣을 이용해 서버를 배포
+
+- `application.properties`파일이 필요
+
+- Spring boot 앱 실행 
+```
+mvn spring-boot:run
+```
+
+- 종료 시, `command + c` 
  
 
 개발기반 : 2019.11 ~ 2019.12
 
-## API 명세
+### API Specification
+
 | URL | 메서드 | 설명 |
 |:---|:---:|:---|
 |/search|GET|검색한 역의 정보 출력|
@@ -266,7 +300,7 @@
 
 
 
-## Dependencies
+### Dependencies
 
 코드 환경은 **Intellij IDEA + MAC OS + JAVA 8** 입니다.
 MAVEN 의존성 프로젝트는 아래와 같습니다.  
@@ -318,32 +352,4 @@ MAVEN 의존성 프로젝트는 아래와 같습니다.
 </dependencies>
     
 ```
-
-## Start Server
-
-- 8101 port 로 연결
-
-- `JDK8`과 `Maven` 설치가 필요
- 
-- `JAVA_HOME`환경변수 설정이 필요
- 
-- `Path`에 `Maven` 환경변수를 설정
-
-- 내장 톰캣을 이용해 서버를 배포
-
-- `application.properties`파일이 필요
-
-- Spring boot 앱 실행 
-```
-mvn spring-boot:run
-```
-
-- 종료 시, `command + c` 
-
-### Used Tools
-1. Spring Boot - Spring Boot Web Framework
-2. Maven
-3. Tomcat
-4. Intellij IDEA - IDE
-5. MySQL - Database
 
