@@ -2,7 +2,11 @@ package com.jiwon.auth.service;
 
 import com.jiwon.auth.entity.User;
 import com.jiwon.auth.repository.UserRepository;
+import com.jiwon.auth.response.DefaultRes;
+import com.jiwon.auth.response.ResponseMessage;
+import com.jiwon.auth.response.StatusCode;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -30,5 +34,17 @@ public class UserService {
 
     public User getUserByUid(String uid) {
         return userRepository.findByUid(uid);
+    }
+
+    @Transactional
+    public DefaultRes signin(String uid, String password) {
+        User user = userRepository.findByUid(uid);
+        if (user == null)
+            return DefaultRes.res(StatusCode.OK, ResponseMessage.INVALID_UID);
+
+        if (!user.getPassword().equals(password))
+            return DefaultRes.res(StatusCode.OK, ResponseMessage.INVALID_PASSWORD);
+
+        return DefaultRes.res(StatusCode.OK, ResponseMessage.SUCCESSFUL_LOGIN);
     }
 }

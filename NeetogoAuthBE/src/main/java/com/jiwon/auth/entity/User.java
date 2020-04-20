@@ -1,10 +1,7 @@
 package com.jiwon.auth.entity;
 
 import jdk.nashorn.internal.objects.annotations.Constructor;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;

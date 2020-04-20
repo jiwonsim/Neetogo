@@ -21,4 +21,5 @@ public abstract class Account {
     public Account(String authority) {
         this.authority = authority;
     }
+
 }

@@ -1,6 +1,7 @@
 package com.jiwon.auth.controller;
 
 import com.jiwon.auth.entity.User;
+import com.jiwon.auth.jwt.JwtService;
 import com.jiwon.auth.response.DefaultRes;
 import com.jiwon.auth.response.ResponseMessage;
 import com.jiwon.auth.response.StatusCode;
@@ -9,9 +10,7 @@ import com.jiwon.auth.dto.UserForm;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 일반 계정 관련 기능을 위한 controller
@@ -24,13 +23,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class UserController {
 
+    final JwtService jwtService;
     final UserService userService;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, JwtService jwtService) {
         this.userService = userService;
+        this.jwtService = jwtService;
     }
 
-    @RequestMapping("/join")
+    @PostMapping("/join")
     public ResponseEntity joinUser(@RequestBody UserForm userForm) {
         try {
             if (userService.isDuplicatedId(userForm.getUid())) {
@@ -44,5 +45,17 @@ public class UserController {
             return new ResponseEntity(DefaultRes.FAIL_DEFAULT_RES, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
+    @PostMapping("/login")
+    public ResponseEntity loginUser(@RequestBody UserForm userForm) {
+        try {
+            return new ResponseEntity(userService.signin(userForm.getUid(), userForm.getPassword()), HttpStatus.OK);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return new ResponseEntity<>(new DefaultRes(HttpStatus.INTERNAL_SERVER_ERROR, ResponseMessage.INTERNAL_SERVER_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 
 }
